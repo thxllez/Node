@@ -1,4 +1,4 @@
-//SIMPLIFICANDO O ARQUIVO APP.JS
+//SIMPLIFICANDO O ARQUIVO server.JS
 var app = require('./config/express')();// o "./" significa que ele vai procurar este arquivo e diretório a partir da PASTA ATUAL
 //o require está sendo dado num arquivo express.js que vai retornar a função de configuração (onde estará incluso o app.set.....)
 //invocamos a função diretamente sem passar para uma variável e só depois invocar.
