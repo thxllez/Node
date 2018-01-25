@@ -3,21 +3,21 @@
 	<body>
 		<table border="1px">
 			<tr>
-				<td>ID</td>
 				<td>Nome</td>
+				<td>Sexo</td>
+				<td>Email</td>
+				<td>CPF</td>
+				<td>Telefone</td>
 			</tr>
-			<tr>
-				<td>ID</td>
-				<td>Nome</td>
-			</tr>
-			<tr>
-				<td>ID</td>
-				<td>Nome</td>
-			</tr>
-			<tr>
-				<td>ID</td>
-				<td>Nome</td>
-			</tr>
+			<% for(var i=0; i < lista.length; i++){ %>
+				<tr>
+					<td> <%=lista[i].NOME %> </td> <!-- "=" pra imprimir -->
+					<td> <%=lista[i].SEXO %> </td> <!-- a variavel lista guarda varios objetos JSON com atributos .NOME, .SEXO etc.-->
+					<td> <%=lista[i].EMAIL %> </td>
+					<td> <%=lista[i].CPF %> </td>
+					<td> <%=lista[i].TELEFONE %> </td>
+				</tr>
+			<% } %>
 		</table>
 	</body>
 	
