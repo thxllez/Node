@@ -26,7 +26,7 @@ module.exports = function(app){ //irá fornecer as rotas (caminhos para acessar 
 	}); 
 
 	app.get('/produtos/cadastro', function(req,res){
-		res.render('produtos/cadProdutos');
+		res.render('produtos/cadProdutos',{errosValidacao: {}, produto: {}}); //passando um json vazio pois ele tenta ler esse json no arquivo ejs
 	});
 
 	app.post('/produtos', function(req,res){
@@ -35,6 +35,19 @@ module.exports = function(app){ //irá fornecer as rotas (caminhos para acessar 
 		var produtosDAO = new produtosDAOAux(connection); //new para criar um novo contexto de uso
 
 		var produto = req.body; //pegando o body da requisição (virá uma estrutura de dados no formato JSON)
+		
+		//o express-validator pega o request e adiciona funções dentro dele
+		
+		var validateTitulo = req.assert('titulo','Titulo é obrigatório!'); //passamos o id que representa o objeto e a mensagem de validação do mesmo, o req.assert retorna um objeto que contém essa validação.
+		validateTitulo.notEmpty(); //estou dizendo para o objeto validador de titulo que não é pra aceitar o campo vazio
+		req.assert('preco','Formato inválido!').isFloat(); //também pode invocar a função direto
+
+		var validationErrors = req.validationErrors(); //retorna um json com os erros de validação
+
+		if(validationErrors){ //se a variável estiver preenchida, é pq foram retornados erros de validação
+			res.render('produtos/cadProdutos',{errosValidacao: validationErrors, produto: produto}); //passando json contendo informação dos erros de validação
+			return; //para não continuar a execução desta função
+		}
 
 		produtosDAO.salva(produto, function(err,results){
 			res.redirect('/produtos'); //redireciona para essa página após executar a função salvar - por padrão redireciona como GET

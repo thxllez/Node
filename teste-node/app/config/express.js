@@ -1,7 +1,7 @@
 var express = require('express');
 var load = require('express-load'); //carregar a biblioteca express-load
 var bodyParser = require('body-parser');
-
+var expressValidator = require('express-validator');
 
 module.exports = function() { //quando alguém der o require chama esse module retornando a variavel app
 	var app = express();
@@ -11,6 +11,7 @@ module.exports = function() { //quando alguém der o require chama esse module r
 	
 	app.use(bodyParser.urlencoded({extended: true})); //definindo que usaremos o bodyparser
 	//extended é uma propriedade para o bodyParser poder interpretar formulários mais complexos
+	app.use(expressValidator()); //invoca o express validator
 
 	load('routes',{cwd: 'app'}).then('infra').into(app); //invocamos o objeto do load e estamos falando que tudo que for carregado automaticamente ficará dentro do nosso objeto app
 	//nela linha de código estamos falando:
