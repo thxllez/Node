@@ -1,0 +1,47 @@
+DETALHES
+
+Module:
+Quando demos um require, ele sempre usará oq foi colocado na variável module.exports
+
+De onde vem a variável module?
+dentro do node temos:
+function require(path){
+	
+}
+
+se passar no require só o nome do path, ele vai procurar isso dentro da pasta node-modules
+se passar no require ./pasta ele vai procurar pasta a partir do diretorio atual
+
+function require(path){
+	var codigoDoSeuModulo = carregado(path); //busca pelo seu path e pega o código dele
+	var funcaoDeCarregamento = function(){
+		eval(codigoDoSeuModulo); //armazena dentro de funcaoDeCarregamento uma função que da um eval no código do seu modulo (eval executa textos como javascript)
+	}
+	var module = {
+		exports : {};
+	};
+	funcaoDeCarregamento(module, module.exports);
+	return module;
+}
+
+
+
+Callbacks:
+Por que o tempo inteiro somos obrigados a passar funções de callback?
+Lidar com operações de IO de maneira mais performática (assíncrona).
+Várias requisições, um processador só.
+--------------------------------------------
+Durante o desenvolvimento da aplicação estamos sempre utilizando chamadas de funções que recebem como parâmetros outras funções. Essas funções que estamos enviando como parâmetros são chamadas de callbacks e servem para ser invocadas pelo próprio JavaScript assim que a função de fora terminar seu processamento.
+
+Quando uma função é invocada dentro da arquitetura Node.js o que acontece é que o fluxo do código não fica parado esperando o retorno dessa função.
+
+Fala-se que as chamadas das funções são assíncronas ou não-blocantes, ou seja a chamada é feita e logo em seguida o processador já fica liberado para atender a novas chamadas.
+
+Quem fica responsável por orquestrar esse escalonamento do processo é o próprio Sistema Operacional, que já é muito bom em fazer isso!
+
+Por esse motivo é que o Node.js é muito útil para as aplicações que dependem de muitas operações de I/O (Input/Output - Entrada/Saída) em que existem várias chamadas a procedimentos que não necessariamente de lógica da aplicação, mas sim de consultas externas ou ações de infra-estrutura, como a leitura e escrita em um banco de dados, por exemplo.
+
+Isso torna o Node.js muito performático e é uma das principais razões pelo seu sucesso!
+
+Até seria possível escrever o código de uma maneira sequencial, mas como o Node.js simplesmente não espera o final do processamento de uma linha de código para executar a próxima, o funcionamento não seria o esperado.
+
