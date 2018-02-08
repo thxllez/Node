@@ -46,7 +46,7 @@ module.exports = function(app){ //irá fornecer as rotas (caminhos para acessar 
 
 		if(validationErrors){ //se a variável estiver preenchida, é pq foram retornados erros de validação
 			res.render('produtos/cadProdutos',{errosValidacao: validationErrors, produto: produto}); //passando json contendo informação dos erros de validação
-			return; //para não continuar a execução desta função
+			return; // return vazio para não continuar a executar o código abaixo, se der erro a execução para aqui.
 		}
 
 		produtosDAO.salva(produto, function(err,results){
